@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구구단</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<div>{{i}} 곱하기 {{j}} 는?</div>
+		<form v-on:submit="submitBtn">
+			<input type="number" v-model="value" ref="answer"/>
+			<button type="submit">입력</button>
+		</form>
+		<div id="result">{{result}}</div>
+	</div>
+<script type="text/javascript">
+	const root = new Vue({
+		el : "#root"
+		, data : {
+			i : Math.ceil(Math.random()*9)
+			, j : Math.ceil(Math.random()*9)
+			, value : ''			
+			, result : ''
+		}
+		, methods : {
+			submitBtn(e) {
+				e.preventDefault();
+				if( this.value == this.i * this.j ) {
+					this.result = "정답";	
+					
+					// Clear
+					this.i = Math.ceil(Math.random()*9);
+					this.j = Math.ceil(Math.random()*9);
+					this.value = '';
+					this.$refs.answer.focus();
+				} else {
+					this.result = "땡";
+					this.value = '';
+				}
+			}
+		}
+	});
+</script>	
+</body>
+</html>
