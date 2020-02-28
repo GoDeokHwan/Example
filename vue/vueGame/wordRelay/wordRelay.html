@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>끝말잇기</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+	<word-relay start-word="잠자리"></word-relay>
+	<word-relay start-word="꿈나라"></word-relay>
+	<word-relay start-word="모바일"></word-relay>
+</div>
+<script type="text/javascript">
+	// 전역 componet가 new Vue보다 상단에 생성하는 규칙
+	// ` '~'문양 버튼	
+	Vue.component('word-relay', {
+		template : `
+			<div>
+				<div>{{word}}</div>
+				<form v-on:submit="onSubmit">
+					<input type="text" v-model="value" ref="answer"/>
+					<button type="submit" >입력</button>
+				</form>
+				<div>{{result}}</div>
+			</div>
+		`
+		, props : ['startWord']
+		, data() {
+			return {
+				word : this.startWord
+				, result : ''
+				, value : ''
+			};
+		}
+		, methods : {
+			onSubmit( e ) {
+				e.preventDefault();
+				console.log(this.value.length);
+				if(this.word[this.word.length-1] === this.value[0]) {
+					this.result = "정답";
+					this.word = this.value;
+					this.value = "";
+					this.$refs.answer.focus();
+				} else {
+					this.result = "떙";
+					this.value = "";
+					this.$refs.answer.focus();
+				}
+				
+			}
+		}
+	});
+
+	const root = new Vue({
+		el : "#root"
+// 		, data : {
+// 			word : 'Á¦·ÎÃÊ'
+// 			, result : ''
+// 			, value : ''
+// 		}
+// 		, methods : {
+// 			onSubmit( e ) {
+// 				e.preventDefault();
+// 				console.log(this.value.length);
+// 				if(this.word[this.word.length-1] === this.value[0]) {
+// 					this.result = "Á¤´ä";
+// 					this.word = this.value;
+// 					this.value = "";
+// 					this.$refs.answer.focus();
+// 				} else {
+// 					this.result = "¶¯";
+// 					this.value = "";
+// 					this.$refs.answer.focus();
+// 				}
+				
+// 			}
+// 		}
+	});
+</script>
+</body>
+</html>
